@@ -1,0 +1,25 @@
+argo-cd:
+  dex:
+    enabled: false
+  notifications:
+    enabled: false
+  # applicationSet:
+  #   enabled: false
+
+  global:
+    domain: argocd.127.0.0.1.nip.io
+
+  certificate:
+    enabled: true
+
+  server:
+    extraArgs:
+    - --insecure
+
+    ingress:
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      tls: true
