@@ -1,6 +1,6 @@
 renovate:
   cronjob:
-    schedule: "*/2 * * * *" #"0 * * * *" # Every hour at minute 0
+    schedule: "0 * * * *" # Every hour at minute 0
     failedJobsHistoryLimit: 3
     successfulJobsHistoryLimit: 3
     jobBackoffLimit: 5
