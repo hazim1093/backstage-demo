@@ -6,7 +6,9 @@ renovate:
     jobBackoffLimit: 5
     parallelism: 0
 
-  existingSecret: renovate-github-secret
+  envFrom:
+  - secretRef:
+      name: renovate-secrets
 
   renovate:
     config: |
