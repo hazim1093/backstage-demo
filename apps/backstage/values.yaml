@@ -7,10 +7,11 @@ backstage:
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 
   backstage:
+    replicas: 2
     image:
-      registry: "ghcr.io"
-      repository: "guymenahem/backstage-platformers"
-      tag: "0.0.1"
+      registry: "docker.io"
+      repository: "hazim/backstage-demo"
+      tag: "0.1.0"
       pullPolicy: IfNotPresent
 
     appConfig:
