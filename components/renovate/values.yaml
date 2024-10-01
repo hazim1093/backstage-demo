@@ -1,6 +1,10 @@
 renovate:
   cronjob:
     schedule: "*/2 * * * *" #"0 * * * *" # Every hour at minute 0
+    failedJobsHistoryLimit: 3
+    successfulJobsHistoryLimit: 3
+    jobBackoffLimit: 5
+    parallelism: 0
 
   existingSecret: renovate-github-secret
 
