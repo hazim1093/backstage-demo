@@ -18,7 +18,6 @@ renovate:
         ],
         "platform": "github",
         "autodiscover": "false",
-        "dryRun": true,
         "printConfig": true,
         "repositories": ["hazim1093/backstage-demo"]
       }
