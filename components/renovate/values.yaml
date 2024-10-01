@@ -1,0 +1,18 @@
+renovate:
+  cronjob:
+    schedule: "*/2 * * * *" #"0 * * * *" # Every hour at minute 0
+
+  existingSecret: renovate-github-secret
+
+  renovate:
+    config: |
+      {
+        "extends": [
+          "config:base"
+        ],
+        "platform": "github",
+        "autodiscover": "false",
+        "dryRun": true,
+        "printConfig": true,
+        "repositories": ["hazim1093/backstage-demo"]
+      }

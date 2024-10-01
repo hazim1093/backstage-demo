@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: renovate
+  namespace: argo-cd
+spec:
+  destination:
+    namespace: renovate
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: components/renovate
+    repoURL: https://github.com/hazim1093/backstage-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
