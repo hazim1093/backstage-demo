@@ -25,6 +25,9 @@ argo-cd:
       tls: true
 
   configs:
+    cm:
+      timeout.reconciliation: 60s
+
     repositories:
       gitops-repo:
         url: https://github.com/hazim1093/backstage-demo
