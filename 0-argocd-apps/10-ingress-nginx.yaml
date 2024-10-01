@@ -7,7 +7,7 @@ spec:
   destination:
     namespace: ingress-nginx
     server: https://kubernetes.default.svc
-  project: components
+  project: default
   source:
     path: components/ingress-nginx
     repoURL: https://github.com/hazim1093/backstage-demo

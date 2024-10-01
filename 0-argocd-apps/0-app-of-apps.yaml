@@ -7,7 +7,7 @@ spec:
   destination:
     namespace: argo-cd
     server: https://kubernetes.default.svc
-  project: argocd-apps
+  project: default
   source:
     path: 0-argocd-apps
     repoURL: https://github.com/hazim1093/backstage-demo
