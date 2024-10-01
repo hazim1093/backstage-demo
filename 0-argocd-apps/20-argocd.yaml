@@ -10,4 +10,4 @@ spec:
   project: components
   source:
     path: components/argo-cd
-    repoUrl: https://github.com/hazim1093/backstage-demo
+    repoURL: https://github.com/hazim1093/backstage-demo
