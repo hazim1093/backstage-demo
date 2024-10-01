@@ -11,3 +11,7 @@ spec:
   source:
     path: components/argo-cd
     repoURL: https://github.com/hazim1093/backstage-demo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
