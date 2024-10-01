@@ -1,0 +1,91 @@
+backstage:
+  ingress:
+    enabled: true
+    className: "nginx"
+    host: backstage.127.0.0.1.nip.io
+
+  backstage:
+    image:
+      registry: "ghcr.io"
+      repository: "guymenahem/backstage-platformers"
+      tag: "0.0.1"
+      pullPolicy: IfNotPresent
+
+    appConfig:
+      organization:
+        name: Demo Backstage
+      app:
+        title: Demo Backstage
+        baseUrl: http://localhost:7007
+
+      backend:
+        baseUrl: http://localhost:7007
+
+        database:
+          client: better-sqlite3
+          connection: ':memory:'
+
+      auth:
+        providers: {}
+
+      scaffolder:
+
+      techdocs:
+        builder: 'local'
+        generator:
+          runIn: 'local'
+        publisher:
+          type: 'local'
+
+      scorecards:
+        test: none
+
+      catalog:
+        locations:
+        # Backstage example components
+        - type: url
+          target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-components.yaml
+          rules:
+          - allow: [Component, System, API, Resource, Location]
+        # Backstage example systems
+        - type: url
+          target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-systems.yaml
+          rules:
+          - allow: [Component, System, API, Resource, Location]
+        # Backstage example APIs
+        - type: url
+          target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-apis.yaml
+          rules:
+          - allow: [Component, System, API, Resource, Location]
+        # Backstage example organization groups
+        - type: url
+          target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/acme/org.yaml
+          rules:
+          - allow: [Component, System, API, Resource, Location]
+        # Backstage example domains
+        - type: url
+          target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-domains.yaml
+          rules:
+          - allow: [Component, System, API, Resource, Location]
+        # Backstage example resources
+        - type: url
+          target: https://github.com/backstage/backstage/blob/master/packages/catalog-model/examples/all-resources.yaml
+          rules:
+          - allow: [Component, System, API, Resource, Location]
+        # Kubernetes demo component
+        - type: url
+          target: https://github.com/mclarke47/dice-roller/blob/master/catalog-info.yaml
+          rules:
+          - allow: [Component, System, API, Resource, Location]
+
+      kubernetes:
+        serviceLocatorMethod:
+          type: 'multiTenant'
+        clusterLocatorMethods:
+        - type: 'config'
+          clusters:
+          - url: kubernetes.default.svc.cluster.local:443
+            name: local
+            authProvider: 'serviceAccount'
+            skipTLSVerify: false
+            skipMetricsLookup: true
