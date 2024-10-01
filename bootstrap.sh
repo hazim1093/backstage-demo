@@ -2,16 +2,16 @@
 set -e
 
 wait_for_ready () {
-    DEPLOYMENT_NAME=$1
+    LABEL=$1
     NAMESPACE=$2
 
     while true; do
-    STATUS=$(kubectl get deployment $DEPLOYMENT_NAME -n $NAMESPACE -o jsonpath='{.status.conditions[?(@.type=="Available")].status}')
+    STATUS=$(kubectl get pods -l $LABEL -n $NAMESPACE -o jsonpath='{.items[].status.conditions[?(@.type=="Ready")].status}')
     if [[ "$STATUS" == "True" ]]; then
-        echo "Deployment $DEPLOYMENT_NAME is available."
+        echo "Pod(s) with label '$LABEL' are available."
         break
     fi
-    echo "Waiting for deployment $DEPLOYMENT_NAME to become available..."
+    echo "Waiting for pod(s) with label '$LABEL' to become available..."
     sleep 3
     done
 }
@@ -43,14 +43,14 @@ Starting bootstrap ...
 # Create cluster
 kind create cluster --config cluster/kind.yaml
 
+# Install ingress-nginx
+kubectl apply -k components/ingress-nginx
+wait_for_ready "app.kubernetes.io/component=controller" "ingress-nginx"
+
 # Install Argocd
 helm dependency build components/argo-cd
 helm upgrade --install argo-cd components/argo-cd -n argo-cd --create-namespace
-wait_for_ready "argo-cd-argocd-server" "argo-cd"
-
-# Install ingress-nginx
-kubectl apply -k components/ingress-nginx
-wait_for_ready "ingress-nginx-controller" "ingress-nginx"
+wait_for_ready "app.kubernetes.io/instance=argo-cd" "argo-cd"
 
 # Enable gitops: Install app of apps
 kubectl apply -f 0-argocd-apps/0-app-of-apps.yaml
