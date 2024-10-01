@@ -9,8 +9,8 @@ argo-cd:
   global:
     domain: argocd.127.0.0.1.nip.io
 
-  certificate:
-    enabled: true
+  # certificate:
+  #   enabled: true
 
   server:
     extraArgs:
@@ -20,6 +20,13 @@ argo-cd:
       enabled: true
       ingressClassName: nginx
       annotations:
-        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        #nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
         nginx.ingress.kubernetes.io/ssl-passthrough: "true"
       tls: true
+
+  configs:
+    repositories:
+      gitops-repo:
+        url: https://github.com/hazim1093/backstage-demo
+        type: git
+        project: default
