@@ -41,6 +41,9 @@ In order to setup the kubernetes cluster (kind) and required tools use the [boot
 
 4. Access backstage: [https://backstage.127.0.0.1.nip.io](https://backstage.127.0.0.1.nip.io)
 
+
+#### Explanation
+
 The bootstrap script will:
 - Install kind cluster called `bs-cluster-01`
 - Deploy nginx ingress controller in the cluster for accessing apps
@@ -77,4 +80,3 @@ The following assumptions have been made in this setup:
 - The docker images can be found in [images/backstage](./images/backstage/)
 - All components are not deployed in HA fashion
 - Backstage is configured without persistent storage and uses in-memory database for simplicity.
--
