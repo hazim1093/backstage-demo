@@ -41,7 +41,6 @@ In order to setup the kubernetes cluster (kind) and required tools use the [boot
 
 4. Access backstage: [https://backstage.127.0.0.1.nip.io](https://backstage.127.0.0.1.nip.io)
 
-
 #### Explanation
 
 The bootstrap script will:
@@ -50,6 +49,11 @@ The bootstrap script will:
 - Deploy ArgoCD in order to enable GitOps
 
 Once the script has finished successfully, ArgoCD will manage all components and apps via GitOps.
+
+To delete or start over again, delete the kind cluster:
+```sh
+kind delete cluster -n bs-cluster-01
+```
 
 ### Updating
 
@@ -71,6 +75,7 @@ In order to test update you can fork the repo and use the fork instead, before b
         --from-literal=RENOVATE_TOKEN="<Github Access Token>" \
         --from-literal=RENOVATE_GIT_AUTHOR="renovate@example.com"
    ```
+5. In order to test a "faulty" update, use the docker image: `hazim/backstage-demo:faulty`. This release should fail to start, but the previous one should still be available.
 
 ## Assumptions / Future Considerations
 
@@ -78,5 +83,6 @@ The following assumptions have been made in this setup:
 
 - The Backstage docker images used is built from an existing community docker image by [The Platformers](https://www.platformers.community), instead of building backstage from scratch for this demo. The Appconfig for backstage has some dummy catalog resources.
 - The docker images can be found in [images/backstage](./images/backstage/)
+- SSL Certificates are not configured
 - All components are not deployed in HA fashion
 - Backstage is configured without persistent storage and uses in-memory database for simplicity.
