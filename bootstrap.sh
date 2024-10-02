@@ -6,13 +6,13 @@ wait_for_ready () {
     NAMESPACE=$2
 
     while true; do
-    STATUS=$(kubectl get pods -l $LABEL -n $NAMESPACE -o jsonpath='{.items[].status.conditions[?(@.type=="Ready")].status}')
-    if [[ "$STATUS" == "True" ]]; then
-        echo "Pod(s) with label '$LABEL' are available."
-        break
-    fi
-    echo "Waiting for pod(s) with label '$LABEL' to become available..."
-    sleep 3
+      STATUS=$(kubectl get pods -l $LABEL -n $NAMESPACE -o jsonpath='{range .items[*]}{.status.conditions[?(@.type=="Ready")].status}{"\n"}{end}')
+      if [[ "$STATUS" == "True" ]]; then
+          echo "Pod(s) with label '$LABEL' are available."
+          break
+      fi
+      echo "Waiting for pod(s) with label '$LABEL' to become available..."
+      sleep 3
     done
 }
 
@@ -50,7 +50,7 @@ wait_for_ready "app.kubernetes.io/component=controller" "ingress-nginx"
 # Install Argocd
 helm dependency build components/argo-cd
 helm upgrade --install argo-cd components/argo-cd -n argo-cd --create-namespace
-wait_for_ready "app.kubernetes.io/instance=argo-cd" "argo-cd"
+wait_for_ready "app.kubernetes.io/name=argocd-server" "argo-cd"
 
 # Enable gitops: Install app of apps
 kubectl apply -f 0-argocd-apps/0-app-of-apps.yaml
