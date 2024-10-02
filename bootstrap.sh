@@ -8,10 +8,10 @@ wait_for_ready () {
     while true; do
       STATUS=$(kubectl get pods -l $LABEL -n $NAMESPACE -o jsonpath='{range .items[*]}{.status.conditions[?(@.type=="Ready")].status}{"\n"}{end}')
       if [[ "$STATUS" == "True" ]]; then
-          echo "Pod(s) with label '$LABEL' are available."
+          echo "Pod with label '$LABEL' are available."
           break
       fi
-      echo "Waiting for pod(s) with label '$LABEL' to become available..."
+      echo "Waiting for pod with label '$LABEL' to become available..."
       sleep 3
     done
 }
